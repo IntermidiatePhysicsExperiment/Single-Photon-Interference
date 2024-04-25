@@ -1,13 +1,12 @@
-import numpy as np
 import matplotlib.pyplot as plt
 import torch as th
 from numba import njit
 
-
+np = th
 
 # 기본단위 m
-slit_points = 1
-blocker_points = 1000
+slit_points = 10
+blocker_points = 100
 METER = 1e10
 WAVELENGTH = 670e-9 * METER
 WAVELENGTH_SIG = 20e-9 * METER
@@ -87,73 +86,46 @@ def hole_to_moving_hole(hole1, hole2, distance):
 def field_to_intensity(field):
   return np.linalg.norm(field)**2
 
+n = 200
+slit_position, slit_type, blocker_position, _ = [5.5e-3 * METER, 14, 5.5e-3 * METER, 0]
+
 def simulator(theta = [
   double_left_width,
   double_right_width,
   detector_width,
   blocker_width,
-  blocker_points,
   distance1,
   distance2,
   WAVENUMBER,
-  gamma
+  # gamma,
+  slit_position, 
+  blocker_position, 
 ], use_wavenumber = False):
   double_left_width = theta[0]
   double_right_width = theta[1]
   detector_width = theta[2]
   blocker_width = theta[3]
-  blocker_points= theta[4]
-  distance1 = theta[5]
-  distance2 = theta[6]
-  wavenumber = theta[7]
-  gamma = theta[8]
-
-  if use_wavenumber:
-    def simulate_wavenumber(slit_position, slit_type, blocker_position, detector_position):
-      wavenumbers = wavenumber + np.linspace(-WAVENUMBER_SIG, WAVENUMBER_SIG, 21)
-      wavenumber_prob = 1 / (1 + np.linspace(-gamma, gamma, 21)**2)
-      wavenumber_prob /= np.sum(wavenumber_prob)
-      intensities = []
-      for wavenumber in wavenumbers:
-        intensities.append(simulate(slit_position, slit_type, blocker_position, detector_position, wavenumber))
-
-      return np.sum(intensities * wavenumber_prob)
-    return simulate_wavenumber
+  distance1 = theta[4]
+  distance2 = theta[5]
+  wavenumber = theta[6]
+  # gamma = theta[8]
+  slit_position = theta[7]
+  blocker_position = theta[8]
   
-  def simulate(slit_position, slit_type, blocker_position, detector_position, wavenumber=wavenumber):
-    gap = GAP_DOUBLE_SLIT[slit_type]
-    slit_hole1 = Hole(slit_position, double_left_width)
-    slit_hole2 = Hole(np.array(slit_position) + gap, double_right_width)
-
-    blocker = Hole(blocker_position, blocker_width, points = blocker_points)
-    
-    detector = Hole(detector_position, detector_width)
-
-    slit_hole1.set_field(np.ones_like(slit_hole1.field))
-    slit_hole2.set_field(np.ones_like(slit_hole2.field))
-
-    blocker.set_field(hole_to_hole(slit_hole1, blocker, distance2, wavenumber) + hole_to_hole(slit_hole2, blocker, distance2, wavenumber))
-    detector.set_field(hole_to_hole(blocker, detector, distance1, wavenumber))
-
-    # detector.set_field(hole_to_hole(slit_hole1, detector, distance1) + hole_to_hole(slit_hole2, detector, distance1))
-    return field_to_intensity(detector.field)
-  
-  return simulate
-
-def simulate(slit_position, slit_type, blocker_position, detector_position, wavenumber=WAVENUMBER):
   gap = GAP_DOUBLE_SLIT[slit_type]
   slit_hole1 = Hole(slit_position, double_left_width)
   slit_hole2 = Hole(np.array(slit_position) + gap, double_right_width)
 
   blocker = Hole(blocker_position, blocker_width, points = blocker_points)
-  
-  detector = Hole(detector_position, detector_width)
 
   slit_hole1.set_field(np.ones_like(slit_hole1.field))
   slit_hole2.set_field(np.ones_like(slit_hole2.field))
 
   blocker.set_field(hole_to_hole(slit_hole1, blocker, distance2, wavenumber) + hole_to_hole(slit_hole2, blocker, distance2, wavenumber))
-  detector.set_field(hole_to_hole(blocker, detector, distance1, wavenumber))
+  
+  def simulate(detector_position):
+    detector = Hole(detector_position, detector_width)
+    detector.set_field(hole_to_hole(blocker, detector, distance1, wavenumber))
 
-  # detector.set_field(hole_to_hole(slit_hole1, detector, distance1) + hole_to_hole(slit_hole2, detector, distance1))
-  return field_to_intensity(detector.field)
+    return field_to_intensity(detector.field)
+  return simulate
