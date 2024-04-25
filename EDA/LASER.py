@@ -7,7 +7,7 @@ from numba import njit
 
 # 기본단위 m
 slit_points = 1
-blocker_points = 100
+blocker_points = 1000
 METER = 1e10
 WAVELENGTH = 670e-9 * METER
 WAVELENGTH_SIG = 20e-9 * METER
@@ -135,3 +135,21 @@ def simulator(theta = [
     return field_to_intensity(detector.field)
   
   return simulate
+
+def simulate(slit_position, slit_type, blocker_position, detector_position, wavenumber=WAVENUMBER):
+  gap = GAP_DOUBLE_SLIT[slit_type]
+  slit_hole1 = Hole(slit_position, double_left_width)
+  slit_hole2 = Hole(np.array(slit_position) + gap, double_right_width)
+
+  blocker = Hole(blocker_position, blocker_width, points = blocker_points)
+  
+  detector = Hole(detector_position, detector_width)
+
+  slit_hole1.set_field(np.ones_like(slit_hole1.field))
+  slit_hole2.set_field(np.ones_like(slit_hole2.field))
+
+  blocker.set_field(hole_to_hole(slit_hole1, blocker, distance2, wavenumber) + hole_to_hole(slit_hole2, blocker, distance2, wavenumber))
+  detector.set_field(hole_to_hole(blocker, detector, distance1, wavenumber))
+
+  # detector.set_field(hole_to_hole(slit_hole1, detector, distance1) + hole_to_hole(slit_hole2, detector, distance1))
+  return field_to_intensity(detector.field)
