@@ -76,7 +76,7 @@ def simulate(slit_position, slit_type, blocker_position, detector_position):
 
   distance1 = 0.489 * UNIT
   
-  detector = Hole(detector_position, 85e-6 * UNIT, points = 1)
+  detector = Hole(detector_position, 85e-6 * UNIT, points = 3)
 
   slit_hole1.set_field(np.ones_like(slit_hole1.field))
   slit_hole2.set_field(np.ones_like(slit_hole2.field))
