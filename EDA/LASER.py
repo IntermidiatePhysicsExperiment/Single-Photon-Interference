@@ -1,7 +1,6 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import torch as th
-from numba import njit
 # 기본단위 m
 points = 1000
 UNIT = 1e10
@@ -18,15 +17,12 @@ def gpu_mul(A, B):
   B = th.tensor(B, dtype = th.complex128).to('mps')
   return th.matmul(A, B).to('cpu').numpy()
 
-@njit
 def numba_mul(A, B):
   return A @ B
 
-@njit
 def numba_get_mul(distance_arr):
   return np.exp(1j * WAVENUMBER * distance_arr) / distance_arr
 
-@njit
 def numba_dist(A, B, distance):
   return np.sqrt(distance**2 + np.square(A - B))
 
@@ -50,7 +46,7 @@ def hole_to_hole(hole1, hole2, distance):
   
   mul = numba_get_mul(distance_arr)
   # return field1 @ mul.T
-  return numba_mul(field1, mul.T)
+  return field1 @ mul.T
 
 def hole_to_moving_hole(hole1, hole2, distance):
   field1 = hole1.field # n x 1
