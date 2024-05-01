@@ -46,7 +46,35 @@ $|E(arrow(r))| = exp(i k |arrow(r)-arrow(r)_p|)\/|arrow(r)-arrow(r)_p|$
   caption: [Figure of Poynting Vector on Double Slit Experiment @hogan2008radiation],
 )<double_slit_p>
 
-본 실험에서의 목적은 영의 이중 슬릿 실험을 단일 광자를 이용해서 재현하는 것이기에 이중 슬릿을 이용한 계산을 R. Hogan의 연구 결과를 이용할 수 있을 것으로 기대하였으나, 본 실험에서 사용한 Techspin사의 "Two-Slit Interference, One Photon at a Time" @techspin2012two-slit 은 보다 많은 슬릿을 이용해 실험 결과를 얻을 수 밖에 없어 새로운 이론적인 계산이 필요했다.
+이중 슬릿 실험의 실험 결과를 Huygens-Fresnel Principle을 이용하여 이론적으로 유도해 보도록 하자. 우선 아래 @double_slit_diagram 과 같이 이중 슬릿 실험 위에서 각 변수를 정의하도록 한다.
+
+#figure(
+  image("images/Double Slit Diagram.png", width: 80%),
+  caption: [Figure of Double Slit with Parameters],
+)<double_slit_diagram>
+
+위 @double_slit_diagram 과 같은 세팅에서 Detector의 위치가 $x$라면 $x << L$이므로 두 슬릿에서의 $theta$는 $x\/L$로 같다고 가정한다. 여기서 Detector에 도달하는 빛의 세기는 단일 슬릿과 이중 슬릿의 곱으로 나타낼 수 있다. 단일 슬릿의 세기 그래프는 $beta=1/2 k b sin theta$일때 $((sin beta) / beta)^2 $에 비례하는 형태로 주어지며, 이중 슬릿의 세기 그래프는 $gamma = 1/2 k h sin theta$일때 $cos^2 gamma$에 비례하는 형태로 주어진다. 이를 이용하여 이중 슬릿의 세기를 유도하면 아래와 같이 주어진다. @manual @pearson2018slit
+$
+I(x) = I_0 ((sin beta(x))/beta(x))^2 cos^2 gamma(x)
+$ <I_simple_cal>
+
+== Line Width of LASER
+
+본 실험에서 사용하는 광원 중 LASER는 특정 파장의 빛만을 방출하는 광원으로 생각된다. 즉, LASER의 spectral line이 detla function이라는 것이다. 그러나 이는 사실이 아니다. 레이저의 spectral line은 아래 @laser_line_width 과 같이 일정한 폭을 가지며, 이를 line width라고 한다. 또, 여기서 진동수나 파수 그래프의 개형은 Lorentzian 형태를 띈다는 것이 알려져 있다 @henry1982theory @wu2024narrow. 이러한 점을 고려하기 위해서 LASER의 선폭을 측정하는 방법론들이 알려져 있지만 본 실험에서는 이중 슬릿 실험에서의 피팅을 통해 알아내도록 한다 @okoshi1980novel.
+
+#figure(
+  image("images/linewidth.png", width: 50%),
+  caption: [Figure of Laser Line Width from Experiment @hinkley1969direct],
+)<laser_line_width>
+
+위 @laser_line_width 와 같은 개형을 띄는 Lorentzian은 중앙이 $x_0$일때 확률 분포가 @Lorentzian 와 같이 주어지는 함수이다.
+$
+p(x) = 1 / (pi gamma (1 + ((x-x_0) / gamma)^2))
+$ <Lorentzian>
+파수가 Lorentzian을 따르는 것이 알려져 있으므로 이를 이용하여 @I_simple_cal 에서 계산한 결과를 대입하면 아래와 같이 나타낼 수 있다.
+$
+I(x) = I_0 integral_0^infinity p(k) ((sin beta(k, x))/beta(k, x))^2 cos^2 gamma(k, x) " " d k
+$ <I_with_linewidth>
 
 = Experimental Methods
 
@@ -64,6 +92,8 @@ $|E(arrow(r))| = exp(i k |arrow(r)-arrow(r)_p|)\/|arrow(r)-arrow(r)_p|$
 
 
 == BULB
+
+
 
 = Theoretical Calculation
 
@@ -105,3 +135,5 @@ $
 
 = Appendix
 
+== Technical Details
+복잡한 학습을 위해 사용한 컴퓨터는 Cudo Compute 
