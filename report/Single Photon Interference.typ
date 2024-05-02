@@ -9,8 +9,8 @@
   authors: (
     (name: "Seunghyun Moon", email: "shmoon232@snu.ac.kr", affiliation: "Department of Physics and Astronomy, Seoul National University,\nSeoul, 08826 South Korea"),
   ),
-  abstract: "서론 열심히 쓰길"+"\n"+text(weight: "bold")[Keywords: ]
-  +"",
+  abstract: "파동은 이중 슬릿을 통과하면서 고유의 무늬를 만들어내며, 이는 Huygens의 이론으로 설명된다. 파동의 일종인 빛 또한 이 성질을 가진다. 하지만 빛은 광자로 이루어져 있으며, 우리는 셀 수 있는 수의 광자를 이용해 실험을 진행하며 이중 슬릿 무늬를 확인하는 것으로 입자인 광자가 간섭 무늬를 만들어낸다는 것을 확인하고자 한다. 이를 위해 우리는 LASER와 약한 빛을 내는 Bulb를 광원으로 가지며 각각에 대해 photodiode와 PMT를 detector로 사용하는 techspin 사의 실험 장치를 이용하여 실험을 진행하였으며, 각 실험에서의 결과를 예측하여 피팅하였다."+"\n"+text(weight: "bold")[Keywords: ]
+  +"Interference, Single Photon, Huygens-Fresnel Principle",
   date: "April 11, 2024",
 )
 
@@ -58,7 +58,7 @@ $
 I(x) = I_0 ((sin beta(x))/beta(x))^2 cos^2 gamma(x)
 $ <I_simple_cal>
 
-== Line Width of LASER
+== Line Width
 
 본 실험에서 사용하는 광원 중 LASER는 특정 파장의 빛만을 방출하는 광원으로 생각된다. 즉, LASER의 spectral line이 detla function이라는 것이다. 그러나 이는 사실이 아니다. 레이저의 spectral line은 아래 @laser_line_width 과 같이 일정한 폭을 가지며, 이를 line width라고 한다. 또, 여기서 진동수나 파수 그래프의 개형은 Lorentzian 형태를 띈다는 것이 알려져 있다 @henry1982theory @wu2024narrow. 이러한 점을 고려하기 위해서 LASER의 선폭을 측정하는 방법론들이 알려져 있지만 본 실험에서는 이중 슬릿 실험에서의 피팅을 통해 알아내도록 한다 @okoshi1980novel.
 
@@ -75,6 +75,8 @@ $ <Lorentzian>
 $
 I(x) = I_0 integral_0^infinity p(k) ((sin beta(k, x))/beta(k, x))^2 cos^2 gamma(k, x) " " d k
 $ <I_with_linewidth>
+
+본 실험에서 사용하는 또다른 광원인 Bulb는 자명하게 고유의 spectral line을 가지고, 이 spectral line이 어떠한 모양을 가지게 되는지는 bulb의 작동 원리에 따라 다르다. 그러나 본 실험에서 사용하는 bulb는 특정 파장에서의 실험을 목적으로 하고 있어 다양한 파장에서 peak가 나타나지는 않을 것으로 예상되고, 충분히 linewidth가 작을 것으로 예상되니 Lorentzian으로 근사할 수 있다 @manual. 따라서 위 @I_with_linewidth 와 동일한 방법을 이용하여 세기를 계산할 수 있다.
 
 = Experimental Methods
 
@@ -103,6 +105,20 @@ LASER의 경우 충분히 강한 빛을 가지고 있어 육안으로도 판별�
 이를 위해 중앙에 검은 선이 그어진 T자 종이를 이용하여 @reflected_laser 와 같이 LASER를 놓았을 때 반사된 빛이 하단에 잘 보이지 않도록 레이저를 배치하였다. 이후 이 레이저를 이용하여 Double Slit이 중앙에 오도록 조정한다. 중앙에 온 것은 위 @reflected_laser 에서 보이는 종이 위에 비치는 상을 통해서 알 수 있다. 그 뒤, Blocker 구멍 사이로 빛이 모두 통과할 수 있도록 해 주는 과정을 수행하고, 마지막으로 Detector Slit이 중앙에 오도록 조정하는 과정을 수행한다. 이러한 과정을 통해 실험 장치를 Align하였다. 
 
 #figure(
+  image("images/source slit align.png", width: 90%),
+  caption: [Aligning Source Slit],
+) <source_align>
+
+Source Slit을 배치하는 경우에 위 @source_align 와 같은 단일 슬릿 간섭 무늬를 얻을 수 있다. 여기서 양쪽으로 생겨나는 간섭 무늬들이 세로의 검은 선과 평행하게 나타나도록 맞추는 것으로 적절하게 Align을 수행할 수 있다.
+
+#figure(
+  image("images/double slit align.png", width: 90%),
+  caption: [Aligning Double Slit],
+) <double_slit_align>
+
+Source slit을 잘 배치한 뒤 이중 슬릿을 배치하는 경우에 위 @double_slit_align 과 같은 무늬를 얻을 수 있다. 여기서 도드라지게 생겨난 세로 무늬가 세로의 검은 선과 평행하게 나타나거나 온전히 겹쳐지는 것으로부터 Align을 수행할 수 있다.
+
+#figure(
   image("images/blocker align.png", width: 90%),
   caption: [Aligning Blocker Slit @manual],
 ) <blocker_align>
@@ -123,7 +139,196 @@ Align하는 과정에서 각 슬릿이 평행하게 놓여 있어야 하는데, 
 이제 첫 실험을 진행한다. 이중 슬릿과 Blocker를 제거한 상태로 Detector만을 움직여 가면서 단일 광자들이 어떻게 측정되는지를 확인한다. 그 뒤, 극대 지점에 Detector를 세팅한 뒤에 blub의 세기를 5단계로 조절해 가면서 전구의 세기 변화를 측정하는 실험을 진행한다. \
 이제 간섭과 관련된 실험을 진행하는데, 14호 슬릿 하나에 대해서만 실험을 진행한다. 14호 슬릿 두 구멍 중 하나를 Blocker로 가린 환경에서 실험을 진행한다. 그 뒤, blocker의 위치를 바꿔 빛이 이중 슬릿의 양쪽을 통과하도록 만든 뒤, 실험을 진행한다.
 
-= Theoretical Calculation
+= Results
+
+== Align
+
+=== Position of Detector Slit
+
+블로커 슬릿의 위치에 따른 Intensity를 측정한 결과는 아래 @blocker_pos 그래프와 같이 나타난다. 
+#figure(
+  image("images/blocker pos.png"),
+  caption: [Graph of Intensity on Blocker Position]
+) <blocker_pos>
+위 실험에서 15호 슬릿이 상대적으로 매우 높은 전압 값을 가지는 것을 확인할 수 있었는데, 이는 Detector의 위치를 온전히 동일하게 맞추지 않은 상태에서 각각의 실험을 진행했기 때문인 것으로 보인다. 다만, 이 실험의 목적인 Blocker의 Align을 위한 최상단의 평평한 부분을 찾는 것은 매우 잘 이루어져 문제가 없는 것으로 보인다. 각 시행에서의 Blocker의 위치를 올바르게 구해낼 수 있었다. 
+
+== LASER
+
+=== Double Slit Interference
+
+@blocker_pos 를 기반으로 하여 blocker가 이중 슬릿을 가리지 않도록 한 상태로 실험을 진행하니 아래 @laser_double_14, @laser_double_15, @laser_double_16 그래프와 같이 나타났다. 
+
+#figure(
+  image("images/laser 14.png"),
+  caption: [Graph of Intensity of No.14 Slit with LASER]
+) <laser_double_14>
+#figure(
+  image("images/laser 15.png"),
+  caption: [Graph of Intensity of No.15 Slit with LASER]
+) <laser_double_15>
+#figure(
+  image("images/laser 16.png"),
+  caption: [Graph of Intensity of No.16 Slit with LASER]
+) <laser_double_16>
+
+각각의 그래프는 14호, 15호, 16호 슬릿에 대한 실험 결과를 나타내며, 각각의 슬릿에 대한 간섭 패턴을 잘 보여주고 있다. 각 그래프가 이론적인 식의 값과 잘 맞는지를 확인하기 위해 Matlab을 이용한 피팅을 진행하였다. 피팅을 위해 사용한 식은 @I_simple_cal 인데, 이 식에서 피팅을 위해 치환과 평행이동을 진행하였다. 이를 통해 세워진 식은 아래와 같다.
+$
+I(x) = I_0 ((sin (a_0(x-b_0))) / (a_0(x-b_0)))^2 cos^2(c_0(x-b_0)) + C_0
+$
+
+위 식에서의 @I_simple_cal 과의 차이는 x와 y방향 translation이 존재한다는 것이다. x방향 translation은 본 실험에서 Detector 슬릿의 위치가 0에서 중앙인 상황이 아니므로 필요하다. 다만, y방향 translation은 경험적으로 필요한 것으로 보이며, 측정 과정에서 생기는 오차로 인해 전체적인 세기가 증가하는 것으로 보인다. 이러한 이유로 y방향 translation인 $C_0$를 추가하였다. 각 그래프에서 $R^2$이 매우 좋게 측정되었으므로 좋은 예측을 수행한 것으로 볼 수 있다. 다만, photodiode는 오차가 매우 작은 것으로 알려져 있으므로, 이 근사를 이후에는 제거하여 더욱 더 상세한 분석을 수행할 필요가 있을 것으로 보인다. 
+
+
+
+=== Single Slit Interference
+
+이제는 단일 슬릿에 대한 실험을 진행하도록 한다. 여기서 @blocker_pos 에서의 정보를 이용하여 오른쪽과 왼쪽에 각각 생겨나는 평평한 부분을 찾아내어 해당 부분의 중앙에서 실험을 진행하도록 한다. 해당 부분이 이중 슬릿에서 한쪽 슬릿만이 가려진 상태로 볼 수 있기 때문이다. 실험 결과는 아래 @laser_single 그래프와 같이 나타난다.
+
+#figure(
+  image("images/laser single.png"),
+  caption: [Graph of Intensity of Single Slit with LASER]
+)<laser_single>
+
+위 @laser_single 그래프에서 역시 Matlab을 활용한 피팅을 진행하였다. 우선 단일 슬릿에서의 이론 식은 위 @I_simple_cal 을 계산하는 과정에서 언급되었다시피 $((sin beta )/beta)^2$에 비례하도록 나타난다. 이 식을 피팅하기 위해 치환과 평행이동을 진행하였고, 이를 통해 세워진 식은 아래와 같다.
+
+$
+I(x) = I_0 ((sin (a_0(x-b_0))) / (a_0(x-b_0)))^2 + C_0
+$
+
+위 식을 통해 피팅을 진행하였으나, 본 실험에서는 detector가 움직이는 과정에서 슬릿의 끝자락에 도달하여 슬릿의 모서리 부분이 실제 photodiode를 가리지 못하는 상황에 도달하였다. 이에 따라 올바르지 않은 그래프가 나타나게 되었고, 이 부분을 제외하여 피팅을 진행하였다.
+
+=== Asymmetric Double Slit Interference
+
+이제는 비대칭 이중 슬릿 회절 실험을 진행하도록 한다. 이 실험에서는 Blocker의 위치를 조정하여 한쪽 슬릿만이 부분적으로 가려지도록 하여 실험을 진행한다. 실험 결과는 아래 @laser_asymm_data 그래프와 같이 나타난다.
+
+#figure(
+  image("images/asymm data.png"),
+  caption: [Graph of Intensity of Asymmetric Double Slit with LASER]
+) <laser_asymm_data>
+
+#figure(
+  image("images/asymm fitting sim.png"),
+  caption: [Asymmetric Double Slit Interference with LASER]
+) <laser_asymm>
+
+위 @laser_asymm_data 그래프에서는 실험 결과를 나타냈다. 다만, 이론적인 식이 쉽게 세워지지는 않기 때문에 특별한 방법을 사용하여 @laser_asymm 과 같이 피팅을 진행할 수 있었다. 이 방법은 Discussion에서 다루도록 하겠다.
+
+== Bulb
+
+=== Driving Voltage Estimation
+
+#figure(
+  image("images/drive voltage.png"),
+  caption: [Driving Voltage Estimation of PMT]
+) <drive_voltage>
+
+위 @drive_voltage 그래프는 PMT의 구동 전압을 조정하며 실험을 진행한 결과를 나타낸다. 이 그래프에서는 PMT의 구동 전압이 증가함에 따라 광자의 수가 증가하는 것을 확인할 수 있다. 이를 통해 PMT의 구동 전압을 조정하여 적절한 값을 찾아낼 수 있었다. 이에 Lower bound와 Upper bound 사이에 존재하는 550V를 구동 전압으로 설정하여 실험을 진행하였다.
+
+=== Threshold Voltage Estimation
+
+#figure(
+  image("images/oscilloscope good.png"),
+  caption: [Threshold Voltage Estimation of PMT with Oscilloscope - Good]
+) <oscilloscope_good>
+
+#figure(
+  image("images/oscilloscope bad.png"),
+  caption: [Threshold Voltage Estimation of PMT with Oscilloscope - Good]
+) <oscilloscope_bad>
+
+위 @oscilloscope_good 과 @oscilloscope_bad 그래프는 PMT의 threshold voltage를 조정하며 실험을 진행한 결과를 나타낸다. 위 @oscilloscope_bad 를 상세히 봤을 때 위의 그래프와 같이 신호가 명확하게 드러나지 않은 상태에서도 하단에 많은 신호가 보이는 것을 확인할 수 있을 것이다. 반면 @oscilloscope_good 를 상세히 봤을 때는 상단의 신호가 명확하게 드러났을 때 하단의 신호가 존재하는 경우에 명확하게 드러나는 것으로부터 좋은 threshold를 설정한 것으로 볼 수 있다. 이를 통해 실험을 진행할 때에는 좋은 threshold를 설정하여 진행하였다. 
+
+=== Power Level of Bulb
+
+#figure(
+  image("images/bulb exp.png"),
+  caption: [Number of Photons of Bulb on Power Level]
+) <bulb_exp>
+
+위 @bulb_exp 그래프는 전구의 세기를 조절하며 실험을 진행한 결과를 나타낸다. 이 그래프에서 전구의 세기가 증가함에 따라 광자의 수가 지수적으로 증가하는 것을 확인할 수 있으며 매우 급격하게 올라가는 것을 확인할 수 있었다. 이를 통해서 bulb의 power level이 4단과 5단인 경우로 맞추어 실험을 진행하는 것이 올바를 것이라고 예상할 수 있게 되었다.
+
+=== Single Slit Interference
+
+#figure(
+  image("images/bulb single.png"),
+  caption: [Single Slit Interference of No.14 Slit with Bulb]
+) <bulb_single>
+
+위 @bulb_single 은 위 @laser_single 과 유사한 환경에서 bulb에 대해 실험을 진행한 결과이다. 본 실험에서는 피팅을 @laser_single 과 동일한 방법으로 진행하였으나, PMT 장비 자체가 가지고 있는 오차가 photodiode와는 다르게 유의미하게 크기에 $C_0$ 값의 도입이 필수적이었다. 이를 통해 실험 결과를 분석하였다. 위 @laser_single 에서의 $R^2$ 값은 Left Slit에서 0.9731, Right Slit 에서 0.9996으로 나타나 매우 좋은 예측을 수행한 것으로 볼 수 있다.
+
+=== Double Slit Interference
+
+
+이중 슬릿에 대한 실험을 진행하도록 한다. 이 실험에서는 위 @laser_double_14 와 같이 14호 슬릿을 이용해 실험을 진행하였다. 위 @bulb_exp 에서 확인한 결과에 따라 bulb의 power level을 4와 5로 조정하여 각각 @bulb_double_4, @bulb_double_5 그래프와 같은 결과를 얻을 수 있었다.
+
+#figure(
+  image("images/bulb double 4.png"),
+  caption: [Double Slit Interference of No.14 Slit with Bulb at Power Level 4]
+) <bulb_double_4>
+
+#figure(
+  image("images/bulb double 5.png"),
+  caption: [Double Slit Interference of No.14 Slit with Bulb at Power Level 5]
+) <bulb_double_5>
+
+위 실험 결과에서는 각각의 그래프에서 피팅을 진행하였는데, 이때 사용한 식은 @I_simple_cal 에서 위에서와 같이 상수항을 더해준 식이다. 이를 통해 실험 결과를 분석하였을 때에 그래프가 어느 정도 벗어난 모습을 보여주었는데, 이는 두 가지의 문제로 인한 것으로 생각된다. 우선 Single Slit Experiment에서의 결과에서 확인해 볼 수 있듯이 Align이 완벽하게 이루어지지 못해 양쪽이 어느 정도 비대칭임을 확인할 수 있었다. 또, 각 점에서 5번의 실험을 수행하여 그래프를 그렸는데, 실험 자체에서 가지는 오차가 매우 커 5번만으로 평균적으로 올바른 값을 뽑아낼 수 있다는 보장이 없는 것으로 보인다. 마지막으로, 본 피팅에서 사용한 식에서는 blocker를 고려하지 않았는데, blocker가 유의미한 영향을 주어 비대칭성을 만들어 냈을 가능성을 배제할 수 없다. 이러한 이유로 실험 결과가 이론적인 결과와 일치하지 않는 것으로 보인다.
+
+= Discussion
+
+== Linewidth
+
+=== Linewidth of LASER
+
+위 Introduction에서 Linewidth에 대해 논의했다시피 이 실험에서 사용하는 LASER는 linewidth를 가질 것이다. 이 점을 고려하여 피팅을 진행해보도록 한다. 우선 기본적으로 @I_with_linewidth 식을 이용하여 피팅을 진행하는 것이 목표이다. 또한, 본 피팅에서는 Photodiode의 오차가 매우 작다는 점을 고려해 $C_0$를 추가하지 않고 피팅을 진행하였다. 이를 통해 실험 결과에서 Linewidth가 한 역할을 보다 극적이게 확인할 수 있었다.
+
+#figure(
+  image("images/14 linewidth.png"),
+  caption: [Double Slit Interference of No.14 Slit with Linewidth]
+)
+
+#figure(
+  image("images/15 linewidth.png"),
+  caption: [Double Slit Interference of No.15 Slit with Linewidth]
+)
+
+#figure(
+  image("images/16 linewidth.png"),
+  caption: [Double Slit Interference of No.16 Slit with Linewidth]
+)
+
+위 세 개의 그래프는 각각 14호, 15호, 16호 슬릿에 대한 실험 결과를 나타낸다. 각 그래프에서 모두 왼쪽 그래프는 linewidth를 고려하지 않은 그래프이고 오른쪽 그래프는 linewidth를 고려한 그래프이다. 이때 linewidth가 생기는 경우에 서로 다른 파장을 가지는 그래프들이 모두 일정 비율로 더해진 그래프이므로 간섭 무늬가 나타나는 과정에서 무늬와 무늬 사이 간격이 서로 다르게 된다. 이로 인해서 왼쪽의 그래프는 peak와 peak 사이에서 0에 도달하는 데에 반해 오른쪽의 그래프는 0에 도달하지 않게 된다. 이는 실제 실험에서 나타난 결과와 일치하는 것으로 보인다. 이 점을 통해 극소점에서의 값을 이용해 linewidth를 예측할 수 있다.
+
+#figure(
+  image("images/14 linewidth wavenumber.png"),
+  caption: [Linewidth of LASER]
+) <linewidth_laser>
+
+이를 통해 예측한 linewidth는 @linewidth_laser 와 같이 나타난다. 여기서 회색으로 칠해진 영역이 FWHM을 나타내며, $3 times 10^(-4) "nm"^(-1)$의 파수 범위 내에 들어와야 하는 것으로 보인다. 이는 대략적으로 3% 정도의 오차로, 파장으로 환산했을 때에 20nm정도의 범위를 가지고 있을 것임을 확인할 수 있다. 이는 Techspin 사에서 제공한 LASER의 linewidth와 들어맞는 수치임을 확인할 수 있다 @techspin2012two-slit.
+
+=== Linewidth of Bulb
+
+이번에는 전구의 linewidth에 대해 알아보도록 한다. 이를 위해서 Bulb에서의 이중 슬릿 실험을 통해 얻은 그래프들을 linewidth를 고려한 식인 @I_with_linewidth 식을 이용하여 피팅을 진행하였다. 다만, 본 실험에서는 PMT가 유의미한 오차를 가지는 것을 @drive_voltage 에서 확인하였으므로 $C_0$를 추가하여 피팅을 진행하였다.
+
+#figure(
+  image("images/bulb without linewidth.png"),
+  caption: [Double Slit Interference of No.14 Slit with Bulb at Power Level 5 without Linewidth]
+) <bulb_no_linewidth>
+#figure(
+  image("images/bulb with linewidth.png"),
+  caption: [Double Slit Interference of No.14 Slit with Bulb at Power Level 5 with Linewidth]
+) <bulb_linewidth>
+
+위 @bulb_no_linewidth 와 @bulb_linewidth 그래프는 각각 linewidth를 고려하지 않은 그래프와 고려한 그래프를 나타낸다. 그러나 본 상황에서는 laser에서와 다르게 PMT의 오차로 인해 peak 와 peak 사이에 0에 도달하지 않으며, 이로 인해 linewidth를 추정하는 것이 어려워졌다. 또, 그래프 자체가 매우 불규칙적이기에 미세한 오차에서 예측할 수 있는 linewidth를 합당하게 예측하는 것이 매우 어렵다는 것을 알 수 있다. 그러나 여전히 bulb의 linewidth를 예측해 보도록 하면 아래와 같은 그래프를 얻을 수 있다.
+
+#figure(
+  image("images/bulb linewidth wavenumber.png"),
+  caption: [Linewidth of Bulb]
+) <linewidth_bulb>
+
+위 그래프에서 중앙에 해당하는 파장의 값은 513.2nm로 techspin에서 제공한 값과 유사하지만 조금 다름을 확인할 수 있었다 @techspin2012two-slit. 또, bulb가 laser보다 더 FWHM이 넓을 것으로 기대되지만 이를 확인할 수 없어 더욱 더 정확한 실험을 수행하여 더 심도있게 분석을 수행할 필요가 있을 것으로 보인다.
+
+
+== Theoretical Calculation
 
 위에서 언급했다시피, 본 실험에서의 장비는 이중 슬릿만을 이용한 실험과 유의미한 차이점을 가지기에 @hogan2008radiation 의 시뮬레이션을 이용할 수 없다. 따라서 새로운 이론적인 계산을 Huygens-Fresnel 원리와 맥스웰의 방정식을 이용하여 진행한다.
 우선 @materials 에서 설명한 실험장치에서 변수를 아래 @parameters 와 같이 설정하도록 한다.
@@ -151,127 +356,21 @@ I_("Detector")(p_4) = |E_0|^2 integral_(p_4)^(p_4+w_4) lr(| integral_(p_3)^(p_3+
 ] \
  exp(i k sqrt(x_2^2+(y_4-y_3)^2)) / sqrt(x_2^2+(y_4-y_3)^2) d y_3|)""^2 d y_4
 $
-본 실험에서 우리는 위 $I_("Detector")(p_4)$의 그래프를 얻는 과정을 수행한다.
-= Results
-
-== Align
-
-=== Position of Detector Slit
-
-블로커 슬릿의 위치에 따른 Intensity를 측정한 결과는 아래 그래프와 같이 나타난다. 
-#figure(
-  image("images/blocker pos.png"),
-  caption: []
-)
-
-== LASER
-
-=== Double Slit Interference
+본 실험에서 우리는 위 $I_("Detector")(p_4)$의 그래프를 얻는 과정을 수행한다. 이 과정을 이용하면 실험 결과를 보다 상세하게 분석할 수 있으나 이 위 식은 매우 복잡한 계산을 필요로 하기에 이를 수행하기 위해서는 많은 컴퓨팅 자원이 필요하다. 아래 Appendix에서 이를 수행하기 위해 사용한 컴퓨팅 자원과 방법을 간략하게 소개한다. 이 과정을 통해서 얻은 결과는 @laser_asymm 과 같은 그래프이다. 이 시뮬레이션 자체의 합당함을 검증하기 위해 비교적 간단한 blocker position을 시뮬레이션 해 보았다.
 
 #figure(
-  image("images/laser 14.png"),
-  caption: []
-)
-#figure(
-  image("images/laser 15.png"),
-  caption: []
-)
-#figure(
-  image("images/laser 16.png"),
-  caption: []
-)
+  image("images/blocker pos sim.png"),
+  caption: [Simulated Intensity on Blocker Position]
+) <simulated>
 
-
-=== Single Slit Interference
-
-#figure(
-  image("images/laser single.png"),
-  caption: []
-)
-
-=== Asymmetric Double Slit Interference
-
-#figure(
-  image("images/asymm fitting sim.png"),
-  caption: []
-)
-
-=== Linewidth of LASER
-
-#figure(
-  image("images/14 linewidth.png"),
-  caption: []
-)
-
-#figure(
-  image("images/15 linewidth.png"),
-  caption: []
-)
-
-#figure(
-  image("images/16 linewidth.png"),
-  caption: []
-)
-
-#figure(
-  image("images/14 linewidth wavenumber.png"),
-)
-
-== Bulb
-
-=== Driving Voltage Estimation
-
-#figure(
-  image("images/drive voltage.png"),
-  caption: []
-)
-
-=== Threshold Voltage Estimation
-
-#figure(
-  image("images/oscilloscope good.png"),
-  caption: []
-)
-
-#figure(
-  image("images/oscilloscope bad.png"),
-  caption: []
-)
-
-=== Power Level of Bulb
-
-#figure(
-  image("images/bulb exp.png"),
-  caption: []
-)
-
-=== Single Slit Interference
-
-#figure(
-  image("images/bulb single.png"),
-  caption: []
-)
-
-=== Double Slit Interference
-
-#figure(
-  image("images/bulb double 4.png"),
-  caption: []
-)
-
-#figure(
-  image("images/bulb double 5.png"),
-  caption: []
-)
-
-= Discussion
+위 @simulated 그래프는 실제 실험 결과와 매우 유사한 모양을 띄고 있으며, Detector를 고의적으로 약간 벗어나게 위치했을 때에 나타나는 특징인 중간 평평한 부분이 level이 맞지 않는 현상까지 확인할 수 있었다. 본 시뮬레이션에서 특이적인 점은, 실제 실험 결과에서 발생했던 평평한 부분에서 일시적으로 급격하게 상승하는 현상이 발생하는 것까지 확인할 수 있었다. 이는 실험 결과에서 발생했던 현상을 매우 잘 설명하는 것으로 보인다. 이를 통해 본 시뮬레이션이 합당함을 확인할 수 있다.
 
 = Conculsion
 
+본 보고서에서는 LASER와 Bulb에 대해서 각각 single slit과 double slit의 Interference 실험을 진행하였다. 또, 이를 이론적인 수치와 비교하는 것으로 실험이 잘 진행되었는지를 검증하고, 알려진 이론이 현실에 잘 들어맞는 것을 확인할 수 있었다. 또, 일정 부분 벗어난 점을 linewidth에 대한 분석을 통해 보정하였으며, 복잡한 적분을 통해 보다 원론적인 방법으로 실험 결과를 예측할 수 있음을 확인하였다.
 
 #bibliography("reference.bib", full:true, style: "american-physics-society")
 
 = Appendix
 
-== Technical Details
-복잡한 학습을 위해 사용한 컴퓨터는 Cudo Compute 
+본 보고서에서 적분을 수반하는 피팅을 하기 위해 사용한 서버는 NVIDIA A40 48GB, 16 vCPUs, 64 GB Memory를 가지도록 세팅하였다. 구현을 위해서 PyTorch 라이브러리를 활용하였으며, optimizer로는 Adam을 활용하였다. 적분 방법으로는 Trapezoidal Rule을 사용하였으며, 적분 과정에서 수치는 complex128로 취급하였다. 다만, 위에서 세운 식이 torch의 autograd 함수로 미분하였을 때에 적절한 값을 얻기 어려운 경우가 많으며, 보다 정확한 계산을 위해 많은 간격을 두고 적분을 수행하는 경우에 부동소수점 오차가 누적되는 구조를 가지고 있어 본 오차를 줄여 개선하기 위해서는 직접 위 식을 미분하여 gradient 함수를 계산해 두는 것이 적절할 것으로 보인다.
