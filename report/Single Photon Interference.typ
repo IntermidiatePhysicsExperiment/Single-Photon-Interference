@@ -11,7 +11,7 @@
   ),
   abstract: "파동은 이중 슬릿을 통과하면서 고유의 무늬를 만들어내며, 이는 Huygens의 이론으로 설명된다. 파동의 일종인 빛 또한 이 성질을 가진다. 하지만 빛은 광자로 이루어져 있으며, 우리는 셀 수 있는 수의 광자를 이용해 실험을 진행하며 이중 슬릿 무늬를 확인하는 것으로 입자인 광자가 간섭 무늬를 만들어낸다는 것을 확인하고자 한다. 이를 위해 우리는 LASER와 약한 빛을 내는 Bulb를 광원으로 가지며 각각에 대해 photodiode와 PMT를 detector로 사용하는 techspin 사의 실험 장치를 이용하여 실험을 진행하였으며, 각 실험에서의 결과를 예측하여 피팅하였다."+"\n"+text(weight: "bold")[Keywords: ]
   +"Interference, Single Photon, Huygens-Fresnel Principle",
-  date: "April 11, 2024",
+  date: "May 2, 2024",
 )
 
 = Introduction
